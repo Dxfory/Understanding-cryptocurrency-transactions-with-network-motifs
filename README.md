@@ -4,15 +4,37 @@ Temporal network-motif analysis of Ethereum stablecoin transfers (USDT · USDC �
 
 对稳定币以太坊转账做时序网络 motif 研究（含 2022 年 5 月 UST/LUNA 崩盘窗口）：时序图 → 三节点 motif → 随机零模型 → 中心性、角色分类与异常检测。Observed motif heatmaps sit next to the null-model heatmaps, so the collapse window can be read against a timestamp-shuffled baseline.
 
+**Pipeline modules live in the `.py` files. Figures for the May 2022 UST/LUNA window are the USDT, USDC, DAI, UST, and LUNA heatmaps plus `motif_heatmap_null_model.png`.**
+
+## Root map
+
+| Path | What it is |
+|---|---|
+| `*.py` | Pipeline stages. CI runs `python -m compileall` on these modules. |
+| `USDT_1h_motifs_heatmap.png` | Lead 1-hour USDT heatmap, kept at the repository root |
+| `motif_heatmap_null_model.png` | Timestamp-permutation null model, kept at the repository root |
+| `figures/USDT_1d_motifs_heatmap.png` | USDT 1-day heatmap |
+| `figures/USDC_1h_motifs_heatmap.png`, `figures/USDC_1d_motifs_heatmap.png` | USDC heatmaps |
+| `figures/DAI_1h_motifs_heatmap.png`, `figures/DAI_1d_motifs_heatmap.png` | DAI heatmaps |
+| `figures/UST_1h_motifs_heatmap.png`, `figures/UST_1d_motifs_heatmap.png` | UST heatmaps |
+| `figures/LUNA_1h_motifs_heatmap.png`, `figures/LUNA_1d_motifs_heatmap.png` | LUNA heatmaps |
+| `figures/` | The rest of the PNG outputs (address ranks, volumes, networks) |
+| `notebooks/01_exploration.ipynb`, `notebooks/motif_all.ipynb` | Named exploratory notebooks |
+| `notebooks/archive/scratch_01.ipynb` … `scratch_05.ipynb` | Former `Untitled` notebooks, archived |
+| `requirements.txt` | Declared Python dependencies |
+| `data_download_and_import.py` | Etherscan download stage (formerly a spaced filename) |
+
 ![USDT 1-hour temporal motif heatmap](USDT_1h_motifs_heatmap.png)
 
 ![Null-model motif heatmap](motif_heatmap_null_model.png)
 
-The `.py` files are the pipeline stages. Several scripts read local CSV paths produced by the previous stage and run when the file is executed. `ETHERSCAN_API_KEY` is read from the environment in `Data download and import.py` via `os.environ.get("ETHERSCAN_API_KEY", "")`.
+![UST 1-hour temporal motif heatmap](figures/UST_1h_motifs_heatmap.png)
+
+The `.py` files are the pipeline stages. Several scripts read local CSV paths produced by the previous stage and run when the file is executed. `ETHERSCAN_API_KEY` is read from the environment in `data_download_and_import.py` via `os.environ.get("ETHERSCAN_API_KEY", "")`.
 
 ## Data download
 
-- `Data download and import.py` — Pages ERC-20 token transfers from the Etherscan `tokentx` API for the contract address configured in the script, and appends rows to `stablecoin_transactions_all1.csv`.
+- `data_download_and_import.py` — Pages ERC-20 token transfers from the Etherscan `tokentx` API for the contract address configured in the script, and appends rows to `stablecoin_transactions_all1.csv`.
 
 ## Preprocessing
 
@@ -56,9 +78,11 @@ The `.py` files are the pipeline stages. Several scripts read local CSV paths pr
 
 ## Notebooks and figures
 
-Exploratory notebooks: `1.ipynb`, `Untitled.ipynb`, `Untitled1.ipynb`, `Untitled2.ipynb`, `Untitled3.ipynb`, `Untitled4.ipynb`, and `motif_all.ipynb`.
+Named notebooks: `notebooks/01_exploration.ipynb` and `notebooks/motif_all.ipynb`.
 
-PNG files in this directory are the output figures, including the heatmaps above.
+Archived drafts, renamed from `Untitled.ipynb` through `Untitled4.ipynb`: `notebooks/archive/scratch_01.ipynb`, `scratch_02.ipynb`, `scratch_03.ipynb`, `scratch_04.ipynb`, `scratch_05.ipynb`.
+
+Lead PNGs stay at the repository root. Every other PNG, including the USDC, DAI, UST, LUNA, and USDT 1-day heatmaps, is under `figures/`.
 
 ## Dependencies
 
